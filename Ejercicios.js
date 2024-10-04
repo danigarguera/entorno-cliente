@@ -110,21 +110,28 @@ switch(operador){
     case("*"):{
         let resultado=(nu1*nu2);
         console.log("El resultado es: ", resultado);
+        break;
 
     }
     case("/"):{
         let resultado=(nu1/nu2);
         console.log("El resultado es: ", resultado);
+        break;
+
 
     }
     case("+"):{
         let resultado=(nu1+nu2);
         console.log("El resultado es: ", resultado);
+        break;
+
 
     }
     case("-"):{
         let resultado=(nu1-nu2);
         console.log("El resultado es: ", resultado);
+        break;
+
 
     }
 }
@@ -143,7 +150,7 @@ console.log("La frase tiene ", palabras.length , "palabras.");
 let frase2 = readlineSync.question('Introduce una frase: ');
 
 // Use split to divide the phrase in separate words
-let palabras2 = frase.trim().split(/\s+/); // trim() delete the spaces of the begining and the end \s+ split the phrase in different spaces
+let palabras2 = frase2.trim().split(/\s+/); // trim() delete the spaces of the begining and the end \s+ split the phrase in different spaces
 //Run the array length backwards printing each word of the array
 for (let i= palabras.length; i>=0;i--){
     console.log(palabras[i]);
@@ -195,3 +202,28 @@ if(rp%np==0){
 }else{
     console.log("El numero no es primo")
 }
+
+class Circulo {
+    constructor(radio) {
+      this.radio = radio;
+    }
+  
+    calcularArea() {
+      return Math.PI * Math.pow(this.radio, 2);
+    }
+  }
+  
+let r = readlineSync.question("Introduce el radio");
+  const miCirculo = new Circulo(r); // Radio de 5
+  
+  // Calcular y mostrar el área en la consola
+  const area = miCirculo.calcularArea();
+  console.log("El área del círculo con radio", r," es: ",area);
+  
+  let nota = readlineSync.question("Introduce la nota: ");
+  if (nota>=60) {
+    console.log("Aprobado");
+  } else {
+    console.log("Reprobado");
+  }
+
