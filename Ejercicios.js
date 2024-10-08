@@ -1,11 +1,11 @@
 var readlineSync = require('readline-sync');
 //we give values to the different variables
 let nombre="Daniel";
-const edad=35;
+const anos=35;
 var megustaProgramar=true;
 //we print the values of the variables
 console.log("Nombre",nombre);
-console.log("edad",edad);
+console.log("edad",anos);
 console.log("Me gusta programar",megustaProgramar);
 //we give values to the variables
 let nun1=12;
@@ -202,28 +202,267 @@ if(rp%np==0){
 }else{
     console.log("El numero no es primo")
 }
-
+//create the class circulo with the variable radio
 class Circulo {
     constructor(radio) {
       this.radio = radio;
     }
-  
+  //create the method to calculate the cirlcle area
     calcularArea() {
       return Math.PI * Math.pow(this.radio, 2);
     }
   }
-  
+  //ask for the value of the radius to the user
 let r = readlineSync.question("Introduce el radio");
   const miCirculo = new Circulo(r); // Radio de 5
   
-  // Calcular y mostrar el área en la consola
+  // Calculate the area using the method an show to the user
   const area = miCirculo.calcularArea();
   console.log("El área del círculo con radio", r," es: ",area);
   
+  //Ask for the grade to the user
   let nota = readlineSync.question("Introduce la nota: ");
+  //if the grade is above to 60 the subject is passed
   if (nota>=60) {
     console.log("Aprobado");
   } else {
     console.log("Reprobado");
   }
 
+//create the class tarea
+class Tarea {
+    constructor(nombre) {
+        this.nombre = nombre;
+        this.completada = false;
+    }
+//create the completar method
+    completar() {
+        this.completada = true;
+    }
+//create the mostrar method using the ternary operator to show if the task is done or not
+    mostrar() {
+        return `${this.nombre} - ${this.completada ? 'Completada' : 'Pendiente'}`;
+    }
+}
+//create the class lista de tareas with an array
+class ListaDeTareas {
+    constructor() {
+        this.tareas = [];
+    }
+//create the method to adda a new task
+    agregarTarea(nombre) {
+        const tarea = new Tarea(nombre);
+        this.tareas.push(tarea);
+        console.log(`Tarea "${nombre}" añadida.`);
+    }
+//create other method to complete it
+    completarTarea(nombre) {
+        const tarea = this.tareas.find(t => t.nombre === nombre);
+        if (tarea) {
+            tarea.completar();
+            console.log(`Tarea "${nombre}" completada.`);
+        } else {
+            console.log(`Tarea "${nombre}" no encontrada.`);
+        }
+    }
+//create the method to sowh the task dividig it in done task and remain task
+    mostrarTareas(pendientes = true) {
+        console.log(pendientes ? "Tareas pendientes:" : "Tareas completadas:");
+        this.tareas
+            .filter(tarea => tarea.completada !== pendientes)
+            .forEach(tarea => console.log(tarea.mostrar()));
+    }
+}
+//create a new object which is a task list
+const listaDeTareas = new ListaDeTareas();
+let salida=false;
+//introduce a menu inside of a while loop 
+while(!salida){
+    console.log('Bienvenido al gestor de tareas');
+    console.log('Seleccione una opción');
+    console.log('1. Mostrar tareas');
+    console.log('2. Agregar tareas');
+    console.log('3. Completar tareas');
+    console.log('4. Salir');
+    
+    let opci = readlineSync.questionInt('Ingrese el numero de la opcion: ');
+
+switch (opci) {
+    case 1:
+        listaDeTareas.mostrarTareas(false);
+        listaDeTareas.mostrarTareas();
+
+        break;
+    case 2:
+        let ntarea=readlineSync.question('Insertar nombre de tarea ');
+        listaDeTareas.agregarTarea(ntarea);
+        break;
+    case 3:
+        listaDeTareas.mostrarTareas();
+        let tareaC=readlineSync.question('Insertar tarea a completar ');
+        listaDeTareas.completarTarea(tareaC);
+        break;
+    case 4:
+        salida=true;
+        console.log('Adios')
+        break;
+    default:
+        console.log('Opción invalida')
+        break;
+}
+
+}
+//create the method to generate the password with the length value as a parameter
+function generarContrasena(longitud) {
+    //create a variable whith characters using capital letters lower letters and numbers
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //create and start a password variable
+    let contrasena = '';
+    //fill this variable with a for loop with random characters
+    for (let i = 0; i < longitud; i++) {
+        const randomIndex = Math.floor(Math.random() * caracteres.length);
+        contrasena += caracteres[randomIndex];
+    }
+    return contrasena;
+}
+
+//Ask for the user to intruduce the lenght of the pasword
+const longitud = readlineSync.questionInt('Ingrese la longitud de la contraseña: ');
+
+//create the password and show it to the user
+const contrasenaGenerada = generarContrasena(longitud);
+console.log(`Contraseña generada: ${contrasenaGenerada}`);
+
+//Create a method to calculate the age with a parameter which is the date of birth
+function calcularEdad(fNacimiento) {
+    //define two variables one for the current date an another with the birht date
+    const hoy = new Date();
+    const nacimiento = new Date(fNacimiento);
+    //sustract the year of birth to the current year and do the same with the month
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    
+//in case of the user havent had his birthday yet this sustract a year to his age
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+    }
+    
+    return edad;
+}
+
+// We ask the age to the user in format YYYY-MM-DD
+const fNacimiento = readlineSync.question('Ingrese su fecha de nacimiento (YYYY-MM-DD): ');
+
+// We call to the method an show the age to the user
+const edad = calcularEdad(fNacimiento);
+console.log(`Tienes ${edad} años.`);
+
+//start a boolean variable to use it into the while loop
+let fin=false;
+//create a variable with the value of a random number between 1 and 100
+let nAdivinar= Math.floor(Math.random()*100)+1;
+// into the while loop we ask to the user to introduce numbers 
+while (!fin) {
+    let nAdivinado=readlineSync.questionInt('Introduce un numero entre el el 1 y el 100 ')
+    //if the number equals to the other number allow to the user to exit the loop an ends the script
+    if (nAdivinado==nAdivinar) {
+        console.log('Acertaste, enhorabuena')
+        fin=true;
+        // if is not the script inform to the user that the number is higher or lower
+    } else {
+        if (nAdivinado<nAdivinar) {
+            console.log('El número que buscas es mayor')
+        }
+        if (nAdivinado>nAdivinar) {
+            console.log('El número que buscas es menor')
+        }
+    }
+}
+
+
+// class libro
+class Libro {
+    constructor(titulo, autor, ano) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.ano = ano;
+    }
+
+    mostrarInformacion() {
+        return `Título: ${this.titulo}, Autor: ${this.autor}, Año: ${this.ano}`;
+    }
+} 
+
+// class Biblioteca
+class Biblioteca {
+    constructor() {
+        this.libros = [];
+    }
+
+    agregarLibro(titulo, autor, ano) {
+        const libro = new Libro(titulo, autor, ano);
+        this.libros.push(libro);
+        console.log(`Libro "${titulo}" añadido a la biblioteca.`);
+    }
+
+    eliminarLibro(titulo) {
+        const indice = this.libros.findIndex(libro => libro.titulo === titulo);
+        if (indice !== -1) {
+            this.libros.splice(indice, 1);
+            console.log(`Libro "${titulo}" eliminado de la biblioteca.`);
+        } else {
+            console.log(`Libro "${titulo}" no encontrado en la biblioteca.`);
+        }
+    }
+
+    mostrarLibros() {
+        if (this.libros.length === 0) {
+            console.log("La biblioteca está vacía.");
+            return;
+        }
+        console.log("Libros en la biblioteca:");
+        this.libros.forEach(libro => {
+            console.log(libro.mostrarInformacion());
+        });
+    }
+}
+
+// Create a new object biblioteca
+const biblioteca = new Biblioteca();
+let sal = false;
+
+// while loop for the menu
+while (!sal) {
+    console.log('Bienvenido al gestor de libros');
+    console.log('Seleccione una opción:');
+    console.log('1. Mostrar libros');
+    console.log('2. Agregar libro');
+    console.log('3. Eliminar libro');
+    console.log('4. Salir');
+    
+    let opci = readlineSync.questionInt('Ingrese el numero de la opcion: ');
+
+    switch (opci) {
+        case 1:
+            biblioteca.mostrarLibros();
+            break;
+        case 2:
+            let tlibro = readlineSync.question('Insertar título: ');
+            let alibro = readlineSync.question('Insertar autor: ');
+            let aplibro = readlineSync.questionInt('Insertar año: ');
+            biblioteca.agregarLibro(tlibro, alibro, aplibro);
+            break;
+        case 3:
+            biblioteca.mostrarLibros();
+            let dlibro = readlineSync.question('Insertar titulo a eliminar: ');
+            biblioteca.eliminarLibro(dlibro);
+            break;
+        case 4:
+            sal = true;
+            console.log('Adiós');
+            break;
+        default:
+            console.log('Opción inválida');
+            break;
+    }
+}
