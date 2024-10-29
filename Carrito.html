@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Carrito de la compra</title>
+</head>
+<style>
+    form {
+        margin: 20px;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: turquoise;
+
+    }
+    body {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    #lapices, #borradores, #tijeras, #cuadernos, #libros {
+        color: white;
+        background-color: rgb(27, 100, 14);
+        border-radius: 5px;
+    }
+    #lapices:hover, #borradores:hover, #tijeras:hover, #cuadernos:hover, #libros:hover {
+        color: rgb(27, 100, 14);
+        background-color: white;
+        border: 2px solid rgb(27, 100, 14);
+    }
+    #lapiz, #goma, #tijera, #cuaderno, #libro {
+        margin: 10px;
+    }
+    #bEliminar {
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        float: right;
+        margin: 20px;
+    }
+
+    #carrito {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        max-width: 800px;
+        
+    }
+
+    #lista {
+        text-align: left;
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+    }
+
+    .item p {
+        margin: 10px;
+    }
+    #lista {
+        background-color: azure;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    #vaciar {
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        margin: 50px;
+    }
+</style>
+<body>
+    <form>
+        <h1>Carrito de compra</h1>
+        <div id="carrito">
+            <div id="lapiz">
+                <label for="name">Lapices:</label><br>
+                <button type="button" id="lapices">Agregar</button>
+            </div>
+            <div id="goma">
+                <label for="name">Gomas:</label><br>
+                <button type="button" id="borradores">Agregar</button>
+            </div>
+            <div id="tijera">
+                <label for="name">Tijeras:</label><br>
+                <button type="button" id="tijeras">Agregar</button>
+            </div>
+            <div id="cuaderno">
+                <label for="name">Cuadernos:</label><br>
+                <button type="button" id="cuadernos">Agregar</button>
+            </div>
+            <div id="libro">
+                <label for="name">Libros:</label><br>
+                <button type="button" id="libros">Agregar</button>
+            </div>
+        </div>
+        <div id="lista">
+            <br>
+            <div id="items"></div>
+            <button type="button" id="vaciar">Vaciar carrito</button>
+        </div>
+    </form>
+</body>
+<script>
+    class Carrito {
+        constructor() {
+            this.items = {
+                lapices: 0,
+                borradores: 0,
+                tijeras: 0,
+                cuadernos: 0,
+                libros: 0
+            };
+            this.llenarCarrito();
+        }
+
+        llenarCarrito() {
+            // Cargar valores desde las cookies
+            for (let item in this.items) {
+                this.items[item] = parseInt(getCookie(item)) || 0;
+            }
+
+            // Actualizar la vista del carrito
+            this.actualizarVista();
+        }
+
+        actualizarVista() {
+            const itemsContainer = document.getElementById('items');
+            itemsContainer.innerHTML = '';
+
+            for (let item in this.items) {
+                if (this.items[item] > 0) {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'item';
+                    itemElement.innerHTML = `
+                        <p>${item.charAt(0).toUpperCase() + item.slice(1)}: ${this.items[item]}</p>
+                        <button type="button" id="bEliminar" onclick="carrito.eliminarItem('${item}')">Eliminar</button>
+                    `;
+                    itemsContainer.appendChild(itemElement);
+                }
+            }
+        }
+
+        agregarItem(item) {
+            this.items[item]++;
+            setCookie(item, this.items[item], 30);
+            this.actualizarVista();
+        }
+
+        eliminarItem(item) {
+            if (this.items[item] > 0) {
+                this.items[item]= 0;
+                setCookie(item, this.items[item], 30);
+            }
+            this.actualizarVista();
+        }
+
+        vaciarCarrito() {
+            for (let item in this.items) {
+                this.items[item] = 0;
+                setCookie(item, 0, -1);
+            }
+            this.actualizarVista();
+        }
+    }
+
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/`;
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    const carrito = new Carrito();
+
+    document.getElementById('lapices').addEventListener('click', () => carrito.agregarItem('lapices'));
+    document.getElementById('borradores').addEventListener('click', () => carrito.agregarItem('borradores'));
+    document.getElementById('tijeras').addEventListener('click', () => carrito.agregarItem('tijeras'));
+    document.getElementById('cuadernos').addEventListener('click', () => carrito.agregarItem('cuadernos'));
+    document.getElementById('libros').addEventListener('click', () => carrito.agregarItem('libros'));
+    document.getElementById('vaciar').addEventListener('click', () => carrito.vaciarCarrito());
+</script>
+</html>
