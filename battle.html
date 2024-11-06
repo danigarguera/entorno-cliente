@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalla Pokémon</title>
+    <link rel="stylesheet" href="estilosBatalla.css">
+</head>
+<body>
+    <h1>¡Comienza la Batalla Pokémon!</h1>
+
+    <div id="battleField">
+        <div id="player">
+            <h2>Tu Pokémon</h2>
+            <img id="playerImg" alt="Imagen del Pokémon del jugador">
+            <p id="playerName"></p>
+            <p id="playerType"></p>
+            <p id="playerStats"></p>
+            <p id="playerHP"></p>
+        </div>
+
+        <div id="vs">
+            <h2>VS</h2>
+        </div>
+
+        <div id="enemy">
+            <h2>Pokémon Oponente</h2>
+            <img id="enemyImg" alt="Imagen del Pokémon del oponente">
+            <p id="enemyName"></p>
+            <p id="enemyType"></p>
+            <p id="enemyStats"></p>
+            <p id="enemyHP"></p>
+        </div>
+    </div>
+
+    <div id="battleControls">
+        <button id="attackButton">Atacar</button>
+        <button id="defendButton">Defender</button>
+        <button id="useItemButton">Usar Objeto</button>
+    </div>
+
+    <div id="battleLog">
+        <h3>Registro de Batalla</h3>
+        <div id="logContent"></div>
+    </div>
+
+
+    <script src="battle.js"></script>
+</body>
+</html>
