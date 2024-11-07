@@ -1,0 +1,125 @@
+/* Estilos básicos para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título principal */
+h1 {
+    color: #2a9d8f;
+    margin-top: 20px;
+}
+
+/* Contenedor de la batalla */
+.battle-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+    width: 80%;
+}
+
+/* Estilo para las tarjetas de los Pokémon */
+.pokemon-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 200px;
+}
+
+.pokemon-card img {
+    width: 50%; /* Reducir aún más el tamaño de las imágenes */
+    border-radius: 10px;
+}
+
+/* Estilos para los botones de acción */
+button {
+    background-color: #2a9d8f;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #264653;
+    transform: scale(1.1);
+}
+
+button:active {
+    background-color: #1d5b4c;
+}
+
+/* Estilo para el contenedor de los botones de acción */
+.actions {
+    margin-top: 20px;
+}
+
+/* Estilo para el botón de "Volver a la Selección de Pokémon" */
+#startBattleButton {
+    background-color: #e76f51;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#startBattleButton:hover {
+    background-color: #d24f31;
+    transform: scale(1.1);
+}
+
+#startBattleButton:active {
+    background-color: #b13f2f;
+}
+
+/* Estilos para el registro de batalla */
+#logContainer {
+    margin-top: 30px;
+    width: 80%;
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#logContent {
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    color: #333;
+}
+/* Estilo para los Pokémon */
+#playerPokemonContainer,
+#enemyPokemonContainer {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    padding: 15px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para los textos de HP */
+#playerHP, #enemyHP {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+}
