@@ -23,23 +23,6 @@ function setBattleData() {
 
 // Función para manejar el ataque
 function attack() {
-    let dano = 0;
-    let pFalloA = Math.round(Math.random() * 10 + 1);
-    let pFalloB = Math.round(Math.random() * 20 + 1);
-
-    // Si el ataque falla
-    if (pFalloA == pFalloB) {
-        dano = 0; // No hay daño si falla
-    } else {
-        // Calcular el daño cuando el ataque tiene éxito
-        dano = Math.round(
-            (playerPokemon.attack / enemyPokemon.defense) * 50 * 
-            (Math.random() * (1.0 - 0.85) + 0.85) // Ejemplo de multiplicador
-        );
-        // Reducir HP del defensor
-        enemyPokemon.hp = Math.max(enemyPokemon.hp - dano, 0);
-    }
-
     // Calcular el daño para ambos Pokémon
     const damageToEnemy = Math.max(0, playerPokemon.attack - enemyPokemon.defense);
     const damageToPlayer = Math.max(0, enemyPokemon.attack - playerPokemon.defense);
@@ -71,6 +54,7 @@ function attack() {
     }
 }
 
+
 // Función para manejar el turno de la máquina (oponente)
 function machineTurn() {
     // Decidir si el enemigo va a atacar o curarse
@@ -99,26 +83,100 @@ function machineTurn() {
     }
 }
 
+
+// Inicialización de las variables hpMax al inicio del combate
+let playerHpMax = playerPokemon.hp;  // Usar el hp inicial como máximo
+let enemyHpMax = enemyPokemon.hp;    // Usar el hp inicial como máximo
+let pokemonCurado = false;  // Inicializar la bandera de curación
+
 // Función para manejar la curación del jugador
 function heal() {
+    // Verificar si los valores de hp son válidos
+    if (isNaN(playerPokemon.hp)) {
+        console.error("Error: los valores de HP no son válidos.");
+        return;
+    }
+
     // Verificar si el Pokémon está completamente curado o no necesita curación
-    if (playerPokemon.hp === playerPokemon.hpMax) {
+    if (playerPokemon.hp === playerHpMax) {
+        // Mensaje si el Pokémon ya tiene la salud máxima
+        updateBattleLog(`${playerPokemon.name} ya está a su máxima salud.`);
         return;  // Si la salud está al máximo, no hacer nada
     }
 
-    // Curar al Pokémon del jugador (restaurar la mitad de su salud máxima)
-    let healAmount = Math.floor(playerPokemon.hpMax / 2);
-    playerPokemon.hp = Math.min(playerPokemon.hp + healAmount, playerPokemon.hpMax);  // No curar más allá del máximo
+    // Verificar si el Pokémon ya ha sido curado
+    if (pokemonCurado) {
+        // Mensaje si el Pokémon ya ha sido curado
+        updateBattleLog(`${playerPokemon.name} ya ha sido curado.`);
+        return;  // Si el Pokémon ya ha sido curado, no hacer nada
+    } else {
+        // Curar al Pokémon del jugador (restaurar la mitad de su salud máxima)
+        let healAmount = Math.floor(playerHpMax / 2);
+        
+        // No curar más allá del máximo de vida
+        let actualHealAmount = Math.min(healAmount, playerHpMax - playerPokemon.hp);
+        playerPokemon.hp += actualHealAmount;
 
-    // Actualizar el log de la batalla
-    updateBattleLog(`${playerPokemon.name} ha curado ${healAmount} puntos de vida.`);
+        // Actualizar el log de la batalla con la cantidad curada
+        updateBattleLog(`${playerPokemon.name} ha curado ${actualHealAmount} puntos de vida.`);
 
-    // Actualizar la pantalla con el nuevo HP
-    document.getElementById('playerHP').textContent = `HP: ${playerPokemon.hp}`;
-    
-    // Guardar los datos de la batalla en las cookies
-    setBattleData();
+        // Actualizar la pantalla con el nuevo HP
+        document.getElementById('playerHP').textContent = `HP: ${playerPokemon.hp}`;
+
+        // Guardar los datos de la batalla en las cookies
+        setBattleData();
+
+        // Marcar que el Pokémon ha sido curado
+        pokemonCurado = true;
+
+        // Mensaje después de la curación
+        updateBattleLog(`${playerPokemon.name} ha sido curado y ahora tiene ${playerPokemon.hp} HP.`);
+    }
 }
+
+
+// Función para manejar el turno de la máquina (oponente)
+function machineTurn() {
+    // Decidir si el enemigo va a atacar o curarse
+    let decision = Math.random() < 0.5 ? 'attack' : 'heal';
+    
+    if (decision === 'attack') {
+        // Si elige atacar, calcula el daño
+        let damage = Math.max(0, enemyPokemon.attack - playerPokemon.defense);
+        playerPokemon.hp = Math.max(playerPokemon.hp - damage, 0);
+        updateBattleLog(`${enemyPokemon.name} atacó a ${playerPokemon.name} causando ${damage} de daño. 
+                         ${playerPokemon.name} ahora tiene ${playerPokemon.hp} HP.`);
+    } else {
+        // Si elige curarse, se cura
+        let healAmount = Math.floor(enemyHpMax / 2);
+        enemyPokemon.hp = Math.min(enemyPokemon.hp + healAmount, enemyHpMax);  // No curar más allá del máximo
+        updateBattleLog(`${enemyPokemon.name} se ha curado ${healAmount} puntos de vida.`);
+    }
+    
+    // Actualizar los datos en las cookies
+    setBattleData();
+
+    // Comprobar si el enemigo ha ganado
+    if (playerPokemon.hp <= 0) {
+        updateBattleLog(`${playerPokemon.name} ha sido derrotado. ¡${enemyPokemon.name} gana!`);
+        disableBattleButtons();
+    }
+}
+
+
+// Asegúrate de que los botones están correctamente habilitados
+document.getElementById('attackButton').disabled = false;
+document.getElementById('healButton').disabled = false;
+
+// Verificar que el botón de curación tenga el evento correctamente asociado
+document.getElementById('healButton').addEventListener('click', function() {
+    console.log("Botón de curación presionado");
+    heal();
+});
+
+// Revisa si el botón de curación tiene un ID correcto en el HTML
+
+
 
 // Función para mostrar los mensajes de la batalla
 function updateBattleLog(message) {
