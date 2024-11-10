@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batalla Pokémon</title>
-    <link rel="stylesheet" href="estilosBatalla.css">
+    <link rel="stylesheet" href="/css/estilosBatalla.css">
 </head>
 <body>
     <h1>¡Batalla Pokémon!</h1>
@@ -16,6 +16,11 @@
             <p id="playerName"></p>
             <p id="playerType"></p>
             <p id="playerHP"></p>
+
+            <!-- Barra de vida del jugador -->
+            <div id="playerHealthBarContainer" class="health-bar-container">
+                <div id="playerHealthBar" class="health-bar"></div>
+            </div>
         </div>
 
         <div id="enemyPokemonContainer" class="pokemon-card">
@@ -24,6 +29,11 @@
             <p id="enemyName"></p>
             <p id="enemyType"></p>
             <p id="enemyHP"></p>
+
+            <!-- Barra de vida del enemigo -->
+            <div id="enemyHealthBarContainer" class="health-bar-container">
+                <div id="enemyHealthBar" class="health-bar"></div>
+            </div>
         </div>
     </div>
 
@@ -32,12 +42,17 @@
         <button id="healButton">Curarse</button>
     </div>
     <button id="startBattleButton" style="display:none;">Volver a la Selección de Pokémon</button>
+
     <div id="logContainer">
-        
         <h2>Registro de Batalla</h2>
         <div id="logContent" class="log-content"></div>
     </div>
-
-    <script src="battle.js"></script>
+    <div class="pokemon-list" id="pokemonList"></div>
+    <audio id="battleMusic" loop autoplay>
+        <source src="/assets/brave heart⁄デジモンアドベンチャー 8bit (128kbit_AAC).m4a" type="audio/mp3"> 
+    </audio>
+    <script type="module" src="/javascript/Pokemones.js"></script>
+    <script type="module" src="/javascript/Galletas.js"></script>
+    <script type="module" src="/javascript/batalla.js"></script>
 </body>
 </html>
