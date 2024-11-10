@@ -1,13 +1,12 @@
-/* Estilos generales de la batalla */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
     background-color: #f1f1f1;
-    background-size: cover; /* Esto asegura que la imagen cubra toda la pantalla */
-    background-position: center; /* Centra la imagen de fondo */
-    background-attachment: fixed; /* Hace que la imagen se quede fija al hacer scroll */
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
     background-image: url('/assets/Estadio.avif');
 }
 
@@ -47,7 +46,6 @@ h1 {
     margin: 5px 0;
 }
 
-/* Estilos de las barras de vida */
 .health-bar-container {
     background-color: #e0e0e0;
     border-radius: 5px;
@@ -59,12 +57,11 @@ h1 {
 
 .health-bar {
     height: 100%;
-    width: 100%; /* Este valor se actualizará con JavaScript */
+    width: 100%; 
     border-radius: 5px;
     background-color: #4CAF50;
 }
 
-/* Estilos para los botones de acción */
 .actions {
     margin-top: 20px;
 }
@@ -90,7 +87,6 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Estilos del registro de batalla */
 #logContainer {
     margin-top: 20px;
     background-color: white;

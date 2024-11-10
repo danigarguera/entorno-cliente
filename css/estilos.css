@@ -1,19 +1,18 @@
-/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('/assets/fondo.png'); /* Cambia esta ruta por la de tu imagen */
-    background-size: cover; /* Esto asegura que la imagen cubra toda la pantalla */
-    background-position: center; /* Centra la imagen de fondo */
-    background-attachment: fixed; /* Hace que la imagen se quede fija al hacer scroll */
-    color: white; /* Cambia el color de texto si lo deseas */
+    background-image: url('/assets/fondo.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+    color: white; 
 }
 
 h1 {
     color: #333;
 }
 
-/* Estilos para la lista de Pokémon */
+
 .pokemon-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -22,7 +21,6 @@ h1 {
     
 }
 
-/* Estilos para las tarjetas de los Pokémon */
 .pokemon-card {
     background-color: #fff;
     border: 2px solid #ddd;
@@ -34,39 +32,33 @@ h1 {
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* Efecto al hacer hover en las tarjetas */
 .pokemon-card:hover {
     transform: scale(1.10);
-    background-color: #4e9e3c; /* Cambia el fondo al hacer hover */
+    background-color: #4e9e3c; 
 }
 
-/* Estilos para cuando el Pokémon está seleccionado */
 .pokemon-card.selected {
-    background-color: #4e9e3c; /* Color de fondo cuando está seleccionado */
-    border-color: #2e7031; /* Bordes más oscuros para el Pokémon seleccionado */
+    background-color: #4e9e3c; 
+    border-color: #2e7031;
 }
 
-/* Imagen del Pokémon */
 .pokemon-card img {
     width: 100px;
     height: 100px;
     object-fit: contain;
 }
 
-/* Títulos de los Pokémon */
 .pokemon-card h2 {
     font-size: 16px;
     margin-top: 10px;
     color: #333;
 }
 
-/* Descripción del tipo de Pokémon */
 .pokemon-card p {
     font-size: 14px;
     color: #555;
 }
 
-/* Estilos para los botones */
 .action-buttons {
     margin-top: 20px;
 }
@@ -83,16 +75,14 @@ button {
     transition: background-color 0.3s;
 }
 
-/* Efecto al hacer hover en los botones */
 button:hover {
     background-color: #45a049;
 }
 
-/* Estilo del botón de "Selección Aleatoria" */
 #randomSelectionButton {
-    background-color: #2196F3; /* Color diferente para diferenciarlo */
+    background-color: #2196F3; 
 }
 
 #randomSelectionButton:hover {
-    background-color: #1976D2; /* Hover para el botón de selección aleatoria */
+    background-color: #1976D2; 
 }

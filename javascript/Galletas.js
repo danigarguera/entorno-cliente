@@ -1,4 +1,5 @@
 
+// Function to retrieve a cookie
 function getCookie(name) {
     const decodedCookies = decodeURIComponent(document.cookie);
     const cookies = decodedCookies.split(';');
@@ -11,11 +12,12 @@ function getCookie(name) {
     return null;
 }
 
-// Función para establecer una cookie
+// Function to set a cookie
 function setCookie(name, value, days) {
     const d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // Configurar la fecha de expiración
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); 
     const expires = "expires=" + d.toUTCString();
     document.cookie = name + "=" + JSON.stringify(value) + ";" + expires + ";path=/";
 }
+// Export the functions
 export { getCookie, setCookie };

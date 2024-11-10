@@ -1,28 +1,29 @@
+//import the Pokemon array and the setCookie function
 import { pokemons } from './Pokemones.js';
 import { setCookie } from './Galletas.js';
 
-// Definir selectedPokemon fuera de las funciones
-let selectedPokemon = null; // Al principio no hay Pokémon seleccionado
+//variable to store the selected pokemon
+let selectedPokemon = null; 
 
-// Función para guardar el Pokémon seleccionado en la cookie
+// Function to save the selected pokemon in a cookie
 function saveSelectedPokemon(pokemon) {
-    setCookie('playerPokemon', pokemon, 7);  // Guardamos por 7 días
+    setCookie('playerPokemon', pokemon, 7);  
 }
 
-// Función para renderizar la lista de Pokémon para que el jugador pueda seleccionar uno
+// Function to render the pokemon list
 function renderPokemonList() {
     const pokemonList = document.getElementById('pokemonList');
     pokemons.forEach(pokemon => {
         const pokemonCard = document.createElement('div');
         pokemonCard.classList.add('pokemon-card');
-        pokemonCard.dataset.id = pokemon.id; // Asignar ID único para cada tarjeta
+        pokemonCard.dataset.id = pokemon.id; 
         pokemonCard.innerHTML = `
             <img src="${pokemon.img}" alt="${pokemon.name}">
             <h2>${pokemon.name}</h2>
             <p>Tipo: ${pokemon.types.join(", ")}</p>
         `;
         
-        // Evento de clic para seleccionar el Pokémon
+        // Event listener to select the pokemon
         pokemonCard.addEventListener('click', () => selectPokemon(pokemon, pokemonCard));
 
         pokemonList.appendChild(pokemonCard);
@@ -30,52 +31,48 @@ function renderPokemonList() {
 }
 
 function selectPokemon(pokemon, cardElement) {
-    // Si ya hay un Pokémon seleccionado, lo desmarcamos
+    // If a pokemon is already selected, unselect it
     if (selectedPokemon) {
         selectedPokemon.card.classList.remove('selected');
     }
 
-    // Marcamos el nuevo Pokémon como seleccionado
+    // Set the selected pokemon
     selectedPokemon = { pokemon, card: cardElement };
     cardElement.classList.add('selected');
 
-    // Habilitar el botón para comenzar la batalla
+    // set the startBattleButton to enabled
     document.getElementById('startBattleButton').disabled = false;
 }
 
-// Acción del botón "Comenzar Batalla"
+// Action the startBattleButton
 document.getElementById('startBattleButton').addEventListener('click', () => {
     if (!selectedPokemon) {
         alert("Por favor, selecciona un Pokémon primero.");
         return;
     }
 
-    // Guardar el Pokémon seleccionado en las cookies
+    // Save the selected pokemon in a cookie
     saveSelectedPokemon(selectedPokemon.pokemon);
 
-    // Redirigir a la página de pre-batalla
-    window.location.href = 'prebatalla.html'; // Asegúrate de que la ruta de prebatalla sea correcta
+    // Redirigir a la página de prebatalla
+    window.location.href = 'prebatalla.html'; 
 });
 
-// Acción del botón "Selección Aleatoria"
+// Random selection button
 document.getElementById('randomSelectionButton').addEventListener('click', () => {
     const randomPokemon = pokemons[Math.floor(Math.random() * pokemons.length)];
     
-    // Actualiza el Pokémon seleccionado sin redirigir
+   
     const randomPokemonCard = document.querySelector(`[data-id="${randomPokemon.id}"]`);
     
-    // Desmarca el Pokémon actual si hay uno seleccionado
     if (selectedPokemon) {
         selectedPokemon.card.classList.remove('selected');
     }
 
-    // Marca el Pokémon aleatorio
     selectedPokemon = { pokemon: randomPokemon, card: randomPokemonCard };
     randomPokemonCard.classList.add('selected');
 
-    // Habilitar el botón para comenzar la batalla
     document.getElementById('startBattleButton').disabled = false;
 });
 
-// Renderizar la lista de Pokémon
 renderPokemonList();
